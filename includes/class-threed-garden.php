@@ -70,7 +70,7 @@ class ThreeD_Garden {
 		if ( defined( 'THREED_GARDEN_VERSION' ) ) {
 			$this->version = THREED_GARDEN_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '0.0.17';
 		}
 		$this->plugin_name = 'threed-garden';
 
@@ -123,9 +123,18 @@ class ThreeD_Garden {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-threed-garden-public.php';
 
 		/**
-		 * [MM] qmanager
+		 * [MM] CUSTOM CLASSES
+		 * for example: require_once plugin_dir_path( dirname( __FILE__ ) ) . 'qmanager.php';
 		 */
-		//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'qmanager.php';
+		/**
+		 * [MM] The class responsible for defining GRAPHQL MUTATION: CREATE ...
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-add-wishlist.php';
+		/**
+		 * [MM] The class responsible for defining GRAPHQL MUTATION: DELETE ...
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-delete-wishlist.php';
+
 
 		$this->loader = new ThreeD_Garden_Loader();
 
