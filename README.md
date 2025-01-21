@@ -1,3 +1,3 @@
 # ThreeD Garden: WordPress Plugin
-- WordPress Plugin to build + support Schema API for ThreeD Garden using WPGraphQL + Pods
-## Project: ThreeD.Design
+- Purpose: a PHP-based WordPress Plugin to build + support the Schema + API for ThreeD Garden App, using WPGraphQL (Queries + Mutations) with Pods (Custom Types + Fields)
+## Project Name: ThreeD.Design
