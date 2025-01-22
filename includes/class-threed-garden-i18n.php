@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://garden.university
+ * @link       https://threed.design
  * @since      0.0.1
  *
  * @package    ThreeD_Garden

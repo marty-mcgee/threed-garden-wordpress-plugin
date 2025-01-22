@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://garden.university
+ * @link       https://threed.design
  * @since      0.0.1
  *
  * @package    ThreeD_Garden

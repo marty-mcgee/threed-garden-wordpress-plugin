@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://garden.university
+ * @link       https://threed.design
  * @since      0.0.1
  *
  * @package    ThreeD_Garden
@@ -123,16 +123,15 @@ class ThreeD_Garden {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-threed-garden-public.php';
 
 		/**
-		 * [MM] CUSTOM CLASSES
+		 * [MM] CUSTOM CLASSES 
+		 * (includes: admin + public)
 		 * for example: require_once plugin_dir_path( dirname( __FILE__ ) ) . 'qmanager.php';
 		 */
-		/**
-		 * [MM] The class responsible for defining GRAPHQL MUTATION: CREATE ...
-		 */
+		// ** [MM] The class responsible for defining GRAPHQL WordPress integrations (Extending WP-GraphQL) ...
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-threed-garden-graphql.php';
+		// ** [MM] The class responsible for defining GRAPHQL MUTATION: CREATE ...
 		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-add-wishlist.php';
-		/**
-		 * [MM] The class responsible for defining GRAPHQL MUTATION: DELETE ...
-		 */
+		// ** [MM] The class responsible for defining GRAPHQL MUTATION: DELETE ...
 		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-delete-wishlist.php';
 
 
