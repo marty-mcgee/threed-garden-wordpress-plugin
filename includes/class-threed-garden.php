@@ -129,11 +129,11 @@ class ThreeD_Garden {
 		/**
 		 * [MM] The class responsible for defining GRAPHQL MUTATION: CREATE ...
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-add-wishlist.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-add-wishlist.php';
 		/**
 		 * [MM] The class responsible for defining GRAPHQL MUTATION: DELETE ...
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-delete-wishlist.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/graphql/mutations/class-delete-wishlist.php';
 
 
 		$this->loader = new ThreeD_Garden_Loader();
