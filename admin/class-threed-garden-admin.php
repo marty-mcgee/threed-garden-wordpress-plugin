@@ -178,13 +178,13 @@ class ThreeD_Garden_Admin {
 				// Do any logic here to sanitize the input, check user capabilities, etc
 				$exampleOutput = '';
 				if ( ! empty( $input['version'] ) ) {
-					$exampleOutput += '* Your input was: ' . $input['version'];
+					$exampleOutput += '* Your input for version was: ' . $input['version'];
 				}
 				if ( ! empty( $input['doAutoLoadData'] ) ) {
-					$exampleOutput += '* Your input was: ' . $input['doAutoLoadData'];
+					$exampleOutput += '* Your input for doAutoLoadData was: ' . $input['doAutoLoadData'];
 				}
 				if ( ! empty( $input['doAutoRotate'] ) ) {
-					$exampleOutput += '* Your input was: ' . $input['version'];
+					$exampleOutput += '* Your input for doAutoRotate was: ' . $input['doAutoRotate'];
 				}
 				return [
 					'exampleOutput' => $exampleOutput,
@@ -192,8 +192,7 @@ class ThreeD_Garden_Admin {
 			}
 		] );
 		/*
-			// Registering the above mutation would allow for the following graphql mutation to be executed:
-
+			// # Registering the above mutation would allow for the following graphql mutation to be executed:
 			mutation {
 				updateThreeDPreferences(
 					input: { clientMutationId: "example", version: "Test..." }
@@ -203,8 +202,7 @@ class ThreeD_Garden_Admin {
 				}
 			}
 
-			// And the following graphql response would be provided:
-
+			// # And the following graphql response would be provided:
 			{
 				"data": {
 					"updateThreeDPreferences": {
@@ -215,7 +213,6 @@ class ThreeD_Garden_Admin {
 			}
 		
 		*/
-		
 
 	}
 
