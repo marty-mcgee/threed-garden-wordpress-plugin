@@ -102,6 +102,10 @@ class ThreeD_Garden_Admin {
 			'templates/single-planting_plan.php' => 'ThreeD Garden Planting Plan',
 		);
 
+		/**
+		 * **********************************************************************************************
+		 */
+
 		/** TESTING AREA */
 		/*
 		 * [MM] 2025-01-22-12-11-000
@@ -136,6 +140,11 @@ class ThreeD_Garden_Admin {
 		 * [MM] 2025-01-22-12-11-001
 		 * Example: Here is a basic example of registering a mutation:
 		*/
+		add_action( 'graphql_register_types', [ $this, 'updateThreeDPreferences' ] );
+		
+	}
+
+	public function updateThreeDPreferences() {
 		// # This function registers a mutation to the Schema.
 		// # The first argument, in this case `updateThreeDPreferences`, is the name of the mutation in the Schema
 		// # The second argument is an array to configure the mutation.
