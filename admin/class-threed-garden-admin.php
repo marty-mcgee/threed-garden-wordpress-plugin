@@ -140,77 +140,75 @@ class ThreeD_Garden_Admin {
 		// # The first argument, in this case `updateThreeDPreferences`, is the name of the mutation in the Schema
 		// # The second argument is an array to configure the mutation.
 		// # The config array accepts 3 key/value pairs for: inputFields, outputFields and mutateAndGetPayload.
-		register_graphql_mutation( 'updateThreeDPreferences', [
-
-			// # inputFields expects an array of Fields to be used for inputting values to the mutation
-			'inputFields' => [
-				'version' => [
-					'type' => 'String',
-					'description' => __( 'Description of the input field: version', 'threedgarden' ),
+		register_graphql_mutation( 
+			mutation_name: 'updateThreeDPreferences', 
+			[
+				// # inputFields expects an array of Fields to be used for inputting values to the mutation
+				'inputFields' => [
+					'version' => [
+						'type' => 'String',
+						'description' => __( 'Description of the input field: version', 'threedgarden' ),
+					],
+					'doAutoLoadData' => [
+						'type' => 'String',
+						'description' => __( 'Description of the input field: doAutoLoadData', 'threedgarden' ),
+					],
+					'doAutoRotate' => [
+						'type' => 'String',
+						'description' => __( 'Description of the input field: doAutoRotate', 'threedgarden' ),
+					],
 				],
-				'doAutoLoadData' => [
-					'type' => 'String',
-					'description' => __( 'Description of the input field: doAutoLoadData', 'threedgarden' ),
+				// # outputFields expects an array of fields that can be asked for in response to the mutation
+				// # the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
+				// # with the same key(s) as the outputFields
+				'outputFields' => [
+					'exampleOutput' => [
+						'type' => 'String',
+						'description' => __( 'Description of the output field', 'threedgarden' ),
+						'resolve' => function( $payload, $args, $context, $info ) {
+									return isset( $payload['exampleOutput'] ) ? $payload['exampleOutput'] : null;
+						}
+					]
 				],
-				'doAutoRotate' => [
-					'type' => 'String',
-					'description' => __( 'Description of the input field: doAutoRotate', 'threedgarden' ),
-				],
-			],
-
-			// # outputFields expects an array of fields that can be asked for in response to the mutation
-			// # the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
-			// # with the same key(s) as the outputFields
-			'outputFields' => [
-				'exampleOutput' => [
-					'type' => 'String',
-					'description' => __( 'Description of the output field', 'threedgarden' ),
-					'resolve' => function( $payload, $args, $context, $info ) {
-								return isset( $payload['exampleOutput'] ) ? $payload['exampleOutput'] : null;
+				// # mutateAndGetPayload expects a function, and the function gets passed the $input, $context, and $info
+				// # the function should return enough info for the outputFields to resolve with
+				'mutateAndGetPayload' => function( $input, $context, $info ) {
+					// Do any logic here to sanitize the input, check user capabilities, etc
+					$exampleOutput = '';
+					if ( ! empty( $input['version'] ) ) {
+						$exampleOutput += '* Your input for version was: ' . $input['version'];
 					}
-				]
-			],
-
-			// # mutateAndGetPayload expects a function, and the function gets passed the $input, $context, and $info
-			// # the function should return enough info for the outputFields to resolve with
-			'mutateAndGetPayload' => function( $input, $context, $info ) {
-				// Do any logic here to sanitize the input, check user capabilities, etc
-				$exampleOutput = '';
-				if ( ! empty( $input['version'] ) ) {
-					$exampleOutput += '* Your input for version was: ' . $input['version'];
+					if ( ! empty( $input['doAutoLoadData'] ) ) {
+						$exampleOutput += '* Your input for doAutoLoadData was: ' . $input['doAutoLoadData'];
+					}
+					if ( ! empty( $input['doAutoRotate'] ) ) {
+						$exampleOutput += '* Your input for doAutoRotate was: ' . $input['doAutoRotate'];
+					}
+					return [
+						'exampleOutput' => $exampleOutput,
+					];
 				}
-				if ( ! empty( $input['doAutoLoadData'] ) ) {
-					$exampleOutput += '* Your input for doAutoLoadData was: ' . $input['doAutoLoadData'];
-				}
-				if ( ! empty( $input['doAutoRotate'] ) ) {
-					$exampleOutput += '* Your input for doAutoRotate was: ' . $input['doAutoRotate'];
-				}
-				return [
-					'exampleOutput' => $exampleOutput,
-				];
-			}
-		] );
+			] 
+		);
 		/*
-			// # Registering the above mutation would allow for the following graphql mutation to be executed:
-			mutation {
-				updateThreeDPreferences(
-					input: { clientMutationId: "example", version: "Test..." }
-				) {
-					clientMutationId
-					exampleOutput
+		// # Registering the above mutation would allow for the following graphql mutation to be executed:
+		mutation {
+			updateThreeDPreferences(
+				input: { clientMutationId: "example", version: "Test..." }
+			) {
+				clientMutationId
+				exampleOutput
+			}
+		}
+		// # And the following graphql response would be provided:
+		{
+			"data": {
+				"updateThreeDPreferences": {
+					"clientMutationId": "example",
+					"exampleOutput": "Your input was: Test..."
 				}
 			}
-
-			// # And the following graphql response would be provided:
-			{
-				"data": {
-					"updateThreeDPreferences": {
-						"clientMutationId": "example",
-						"exampleOutput": "Your input was: Test..."
-					}
-				}
-			}
-		
+		}
 		*/
 
 	}
