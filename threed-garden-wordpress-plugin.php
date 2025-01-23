@@ -103,106 +103,10 @@ run_threed_garden();
  * TESTING AREA
  * **********************************************************************************************
  */
-
-
-		/*
-		 * [MM] 2025-01-33-12-11-000
-		 * TESTING: GRAPHQL CUSTOM FIELDS for MUTATIONS
-		*/
-		
-		add_filter('graphql_input_fields', function($input_fields, $type_name) {
-			if ($type_name === "UpdatePreferencesInput") {
-
-				$input_fields['version'] = [
-					'type' => 'String',
-					'description' => __('A string containing the current preferences\'s version.', 'wp-graphql'),
-				];
-				
-				$input_fields['doAutoLoadData'] = [
-					'type' => 'Boolean',
-					'description' => __('A true|false containing the current preferences\'s doAutoLoadData.', 'wp-graphql'),
-				];
-				
-			}
-			return $input_fields;
-		}, 10, 2);
-		
-		/*
-		 * [MM] 2025-01-33-12-11-001
-		 * Example
-			Here is a basic example of registering a mutation:
-			# This function registers a mutation to the Schema.
-			# The first argument, in this case `exampleMutation`, is the name of the mutation in the Schema
-			# The second argument is an array to configure the mutation.
-			# The config array accepts 3 key/value pairs for: inputFields, outputFields and mutateAndGetPayload.
-		*/
-		/*
-			register_graphql_mutation( 'exampleMutation', [
-
-// 				# inputFields expects an array of Fields to be used for inputting values to the mutation
-				'inputFields'         => [
-					'exampleInput' => [
-						'type' => 'String',
-						'description' => __( 'Description of the input field', 'your-textdomain' ),
-					]
-				],
-
-// 				# outputFields expects an array of fields that can be asked for in response to the mutation
-// 				# the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
-// 				# with the same key(s) as the outputFields
-				'outputFields'        => [
-					'exampleOutput' => [
-						'type' => 'String',
-						'description' => __( 'Description of the output field', 'your-textdomain' ),
-						'resolve' => function( $payload, $args, $context, $info ) {
-									return isset( $payload['exampleOutput'] ) ? $payload['exampleOutput'] : null;
-						}
-					]
-				],
-
-// 				# mutateAndGetPayload expects a function, and the function gets passed the $input, $context, and $info
-// 				# the function should return enough info for the outputFields to resolve with
-				'mutateAndGetPayload' => function( $input, $context, $info ) {
-					// Do any logic here to sanitize the input, check user capabilities, etc
-					$exampleOutput = null;
-					if ( ! empty( $input['exampleInput'] ) ) {
-						$exampleOutput = 'Your input was: ' . $input['exampleInput'];
-					}
-					return [
-						'exampleOutput' => $exampleOutput,
-					];
-				}
-			] );
-		*/
-		/*
-			// Registering the above mutation would allow for the following mutation to be executed:
-
-			mutation {
-				exampleMutation(
-					input: { clientMutationId: "example", exampleInput: "Test..." }
-				) {
-					clientMutationId
-					exampleOutput
-				}
-			}
-
-			// And the following response would be provided:
-
-			{
-				"data": {
-					"exampleMutation": {
-						"clientMutationId": "example",
-						"exampleOutput": "Your input was: Test..."
-					}
-				}
-			}
-		 
-		*/
-
 class ThreeDGardenPlugin{
   
 	private static $instance;
-	 /*......*/
+	/*......*/
 
 	static function threedgarden_get_instance()
 	{
