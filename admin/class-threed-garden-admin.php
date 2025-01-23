@@ -111,16 +111,19 @@ class ThreeD_Garden_Admin {
 		add_filter('graphql_input_fields', function($input_fields, $type_name) {
 			if ($type_name === "UpdatePreferencesInput") {
 
+				// version
 				$input_fields['version'] = [
 					'type' => 'String',
 					'description' => __('A string for preferences\'s version.', 'wp-graphql'),
 				];
 				
+				// doAutoLoadData
 				$input_fields['doAutoLoadData'] = [
 					'type' => 'Boolean',
 					'description' => __('A true|false for preferences\'s doAutoLoadData.', 'wp-graphql'),
 				];
 				
+				// doAutoRotate
 				$input_fields['doAutoRotate'] = [
 					'type' => 'Boolean',
 					'description' => __('A true|false for preferences\'s doAutoRotate.', 'wp-graphql'),
@@ -133,25 +136,33 @@ class ThreeD_Garden_Admin {
 		/*
 		 * [MM] 2025-01-22-12-11-001
 		 * Example: Here is a basic example of registering a mutation:
-			# This function registers a mutation to the Schema.
-			# The first argument, in this case `updateThreeDPreferences`, is the name of the mutation in the Schema
-			# The second argument is an array to configure the mutation.
-			# The config array accepts 3 key/value pairs for: inputFields, outputFields and mutateAndGetPayload.
 		*/
+		// # This function registers a mutation to the Schema.
+		// # The first argument, in this case `updateThreeDPreferences`, is the name of the mutation in the Schema
+		// # The second argument is an array to configure the mutation.
+		// # The config array accepts 3 key/value pairs for: inputFields, outputFields and mutateAndGetPayload.
 		register_graphql_mutation( 'updateThreeDPreferences', [
 
 			// # inputFields expects an array of Fields to be used for inputting values to the mutation
-			'inputFields'         => [
+			'inputFields' => [
 				'version' => [
 					'type' => 'String',
-					'description' => __( 'Description of the input field', 'threedgarden' ),
-				]
+					'description' => __( 'Description of the input field: version', 'threedgarden' ),
+				],
+				'doAutoLoadData' => [
+					'type' => 'String',
+					'description' => __( 'Description of the input field: doAutoLoadData', 'threedgarden' ),
+				],
+				'doAutoRotate' => [
+					'type' => 'String',
+					'description' => __( 'Description of the input field: doAutoRotate', 'threedgarden' ),
+				],
 			],
 
 			// # outputFields expects an array of fields that can be asked for in response to the mutation
 			// # the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
 			// # with the same key(s) as the outputFields
-			'outputFields'        => [
+			'outputFields' => [
 				'exampleOutput' => [
 					'type' => 'String',
 					'description' => __( 'Description of the output field', 'threedgarden' ),
@@ -165,9 +176,15 @@ class ThreeD_Garden_Admin {
 			// # the function should return enough info for the outputFields to resolve with
 			'mutateAndGetPayload' => function( $input, $context, $info ) {
 				// Do any logic here to sanitize the input, check user capabilities, etc
-				$exampleOutput = null;
+				$exampleOutput = '';
 				if ( ! empty( $input['version'] ) ) {
-					$exampleOutput = 'Your input was: ' . $input['version'];
+					$exampleOutput += '* Your input was: ' . $input['version'];
+				}
+				if ( ! empty( $input['doAutoLoadData'] ) ) {
+					$exampleOutput += '* Your input was: ' . $input['doAutoLoadData'];
+				}
+				if ( ! empty( $input['doAutoRotate'] ) ) {
+					$exampleOutput += '* Your input was: ' . $input['version'];
 				}
 				return [
 					'exampleOutput' => $exampleOutput,
