@@ -1,14 +1,14 @@
 <?php
 /**
- * @link              https://threed.design
- * @since             0.0.0
+ * @link              https://garden.university
+ * @since             0.0.1
  * @package           ThreeD_Garden
  *
  * @wordpress-plugin
- * Plugin Name:       ThreeD Garden: WordPress Plugin
- * Plugin URI:        https://threed.design
+ * Plugin Name:       ThreeD Garden
+ * Plugin URI:        https://garden.university
  * Description:       Design + manage your garden plants, beds + allotments in 3D
- * Version:           0.17.0
+ * Version:           0.16.0
  * Author:            Marty McGee
  * Author URI:        https://companyjuice.com/contact/
  * License:           GPL-3.0
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Current plugin version.
  * Start at version 0.0.1 using SemVer -- https://semver.org
  */
-define( 'THREED_GARDEN_VERSION', '0.17.0-b24' );
+define( 'THREED_GARDEN_VERSION', '0.16.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -61,8 +61,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-threed-garden.php';
  * https://stackoverflow.com/questions/58931144/enqueue-javascript-with-type-module
  */
 function add_type_attribute($tag, $handle, $src) {
-	// if ( 'threed-garden' === $handle || 'threedgarden-vite' === $handle ) {
-	if ( 'threed-garden' === $handle ) {
+	if ( 'threed-garden' === $handle || 'threedgarden-vite' === $handle ) {
 		// change the script tag by adding type="module" and return it.
 		//$printf(strval($tag));
 		//echo htmlspecialchars('Y' . ' | ' . $handle . ' | ' . $tag . ' | ' . $src) . ' |<br>';
@@ -104,10 +103,11 @@ run_threed_garden();
  * TESTING AREA
  * **********************************************************************************************
  */
+
 class ThreeDGardenPlugin{
   
 	private static $instance;
-	/*......*/
+	 /*......*/
 
 	static function threedgarden_get_instance()
 	{
@@ -228,8 +228,8 @@ class ThreeDGardenPlugin{
 	public function threedgarden_options_default() {
 
 		return array(
-			'custom_url'     => 'https://threed.design/',
-			'custom_title'   => 'Powered by Company Juice + ThreeD AI',
+			'custom_url'     => 'https://garden.university/',
+			'custom_title'   => 'Powered by Company Juice',
 			'custom_style'   => 'disable',
 			'custom_message' => '<p class="custom-message">My custom message</p>',
 			'custom_footer'  => 'Special message for users',

@@ -123,12 +123,12 @@ class ThreeD_Garden {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-threed-garden-public.php';
 
 		/**
-		 * [MM] CUSTOM CLASSES ??
+		 * [MM] CUSTOM CLASSES ???
 		 * (includes: admin + public)
 		 * for example: require_once plugin_dir_path( dirname( __FILE__ ) ) . 'qmanager.php';
 		 */
 		// ** [MM] The class responsible for defining GRAPHQL WordPress integrations (Extending WP-GraphQL) ...
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-threed-garden-graphql.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-threed-garden-graphql.php';
 
 		$this->loader = new ThreeD_Garden_Loader();
 
@@ -202,7 +202,7 @@ class ThreeD_Garden {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'cpt_remove_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_cpt_template_meta_data' );
 		//$this->loader->add_filter( 'single_template', $plugin_admin, 'custom_single_template' );
-		
+
 	}
 
 	/**

@@ -111,30 +111,30 @@ class ThreeD_Garden_Admin {
 		 * [MM] 2025-01-22-12-11-000
 		 * TESTING: GRAPHQL CUSTOM FIELDS for MUTATIONS
 		*/
-		add_filter('graphql_input_fields', function($input_fields, $type_name) {
-			if ($type_name === "UpdatePreferencesInput") {
+		// add_filter('graphql_input_fields', function($input_fields, $type_name) {
+		// 	if ($type_name === "UpdatePreferencesInput") {
 
-				// version
-				$input_fields['version'] = [
-					'type' => 'String',
-					'description' => __('A string for preferences\'s version.', 'wp-graphql'),
-				];
+		// 		// version
+		// 		$input_fields['version'] = [
+		// 			'type' => 'String',
+		// 			'description' => __('A string for preferences\'s version.', 'wp-graphql'),
+		// 		];
 				
-				// doAutoLoadData
-				$input_fields['doAutoLoadData'] = [
-					'type' => 'Boolean',
-					'description' => __('A true|false for preferences\'s doAutoLoadData.', 'wp-graphql'),
-				];
+		// 		// doAutoLoadData
+		// 		$input_fields['doAutoLoadData'] = [
+		// 			'type' => 'Boolean',
+		// 			'description' => __('A true|false for preferences\'s doAutoLoadData.', 'wp-graphql'),
+		// 		];
 				
-				// doAutoRotate
-				$input_fields['doAutoRotate'] = [
-					'type' => 'Boolean',
-					'description' => __('A true|false for preferences\'s doAutoRotate.', 'wp-graphql'),
-				];
+		// 		// doAutoRotate
+		// 		$input_fields['doAutoRotate'] = [
+		// 			'type' => 'Boolean',
+		// 			'description' => __('A true|false for preferences\'s doAutoRotate.', 'wp-graphql'),
+		// 		];
 				
-			}
-			return $input_fields;
-		}, 10, 2);
+		// 	}
+		// 	return $input_fields;
+		// }, 10, 2);
 		
 		/*
 		 * [MM] 2025-01-22-12-11-001
@@ -143,83 +143,247 @@ class ThreeD_Garden_Admin {
 		add_action( 'graphql_register_types', [ $this, 'updateThreeDPreferences' ] );
 		
 	}
+	/*
+	mutation UpdateThreeDPreferences {
+		updateThreeDPreferences(
+			input: {
+				clientMutationId: "exampleUniqueId", 
+				doAutoLoadData: true, 
+				doAutoRotate: false, 
+				id: "406", 
+				version: "v0.17.0-b24", 
+				content: "HAPPY DAY", 
+				title: "PREFERENCES: DEFAULT (UPDATED)"
+			}
+		) {
+			success
+			message
+			updatedFields
+			clientMutationId
+		}
+	}
+	*/
 
 	public function updateThreeDPreferences() {
+		// ** Make sure WPGraphQL is active
+		if ( ! class_exists('WPGraphQL') || ! defined( 'PODS_VERSION') ) {
+			return;
+		}
 		// # This function registers a mutation to the Schema.
 		// # The first argument, in this case `updateThreeDPreferences`, is the name of the mutation in the Schema
 		// # The second argument is an array to configure the mutation.
 		// # The config array accepts 3 key/value pairs for: inputFields, outputFields and mutateAndGetPayload.
 		register_graphql_mutation( 
-			mutation_name: 'updateThreeDPreferences', 
+			'updateThreeDPreferences', 
 			[
 				// # inputFields expects an array of Fields to be used for inputting values to the mutation
 				'inputFields' => [
+					'id' => [
+						'type' => 'ID',
+						'description' => __( 'The ID of the Pods item to update', 'wp-graphql' ),
+					],
+					'title' => [
+						'type' => 'String',
+						'description' => __( 'Description of the input field: title', 'wp-graphql' ),
+					],
+					'content' => [
+						'type' => 'String',
+						'description' => __( 'Description of the input field: content', 'wp-graphql' ),
+					],
 					'version' => [
 						'type' => 'String',
-						'description' => __( 'Description of the input field: version', 'threedgarden' ),
+						'description' => __( 'Description of the input field: version', 'wp-graphql' ),
 					],
 					'doAutoLoadData' => [
-						'type' => 'String',
-						'description' => __( 'Description of the input field: doAutoLoadData', 'threedgarden' ),
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doAutoLoadData', 'wp-graphql' ),
 					],
 					'doAutoRotate' => [
-						'type' => 'String',
-						'description' => __( 'Description of the input field: doAutoRotate', 'threedgarden' ),
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doAutoRotate', 'wp-graphql' ),
+					],
+					'doWorldDebug' => [
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doWorldDebug', 'wp-graphql' ),
+					],
+					'doWorldTesting' => [
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doWorldTesting', 'wp-graphql' ),
+					],
+					'doWorldPhysics' => [
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doWorldPhysics', 'wp-graphql' ),
+					],
+					'doWorldControl' => [
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doWorldControl', 'wp-graphql' ),
+					],
+					'doWorldUnfollowCam' => [
+						'type' => 'Boolean',
+						'description' => __( 'Description of the input field: doWorldUnfollowCam', 'wp-graphql' ),
 					],
 				],
 				// # outputFields expects an array of fields that can be asked for in response to the mutation
 				// # the resolve function is optional, but can be useful if the mutateAndPayload doesn't return an array
 				// # with the same key(s) as the outputFields
 				'outputFields' => [
-					'exampleOutput' => [
-						'type' => 'String',
-						'description' => __( 'Description of the output field', 'threedgarden' ),
-						'resolve' => function( $payload, $args, $context, $info ) {
-									return isset( $payload['exampleOutput'] ) ? $payload['exampleOutput'] : null;
-						}
-					]
+					'success' => [
+							'type' => 'Boolean',
+							'description' => __( 'Whether the mutation was successful', 'wp-graphql' ),
+					],
+					'message' => [
+							'type' => 'String',
+							'description' => __( 'A message describing the result', 'wp-graphql' ),
+					],
+					'updatedFields' => [
+							'type' => 'String',
+							'description' => __( 'The updated fields in JSON format', 'wp-graphql' ),
+					],
+					// 'id' => [
+					// 	'type' => 'ID',
+					// 	'description' => __( 'The ID of the Pods item updated', 'wp-graphql' ),
+					// 	'resolve' => function( $payload, $args, $context, $info ) {
+					// 				return isset( $payload['id'] ) ? $payload['id'] : null;
+					// 	}
+					// ],
+					// 'version' => [
+					// 	'type' => 'String',
+					// 	'description' => __( 'Description of the output field: version', 'wp-graphql' ),
+					// 	'resolve' => function( $payload, $args, $context, $info ) {
+					// 				return isset( $payload['version'] ) ? $payload['version'] : null;
+					// 	}
+					// ],
+					// 'doAutoLoadData' => [
+					// 	'type' => 'Boolean',
+					// 	'description' => __( 'Description of the output field: doAutoLoadData', 'wp-graphql' ),
+					// 	'resolve' => function( $payload, $args, $context, $info ) {
+					// 				return isset( $payload['doAutoLoadData'] ) ? $payload['doAutoLoadData'] : null;
+					// 	}
+					// ],
+					// 'doAutoRotate' => [
+					// 	'type' => 'String',
+					// 	'description' => __( 'Description of the output field: doAutoRotate', 'wp-graphql' ),
+					// 	'resolve' => function( $payload, $args, $context, $info ) {
+					// 				return isset( $payload['doAutoRotate'] ) ? $payload['doAutoRotate'] : null;
+					// 	}
+					// ],
 				],
 				// # mutateAndGetPayload expects a function, and the function gets passed the $input, $context, and $info
 				// # the function should return enough info for the outputFields to resolve with
 				'mutateAndGetPayload' => function( $input, $context, $info ) {
 					// Do any logic here to sanitize the input, check user capabilities, etc
-					$exampleOutput = '';
-					if ( ! empty( $input['version'] ) ) {
-						$exampleOutput += '* Your input for version was: ' . $input['version'];
+
+					// Extract the input values
+					$id = isset( $input['id'] ) ? $input['id'] : null;
+					$title = isset( $input['title'] ) ? $input['title'] : null;
+					$content = isset( $input['content'] ) ? $input['content'] : null;
+					$version = isset( $input['version'] ) ? $input['version'] : null;
+					$doAutoLoadData = isset( $input['doAutoLoadData'] ) ? $input['doAutoLoadData'] : null;
+					$doAutoRotate = isset( $input['doAutoRotate'] ) ? $input['doAutoRotate'] : null;
+					$doWorldDebug = isset( $input['doWorldDebug'] ) ? $input['doWorldDebug'] : null;
+					$doWorldTesting = isset( $input['doWorldTesting'] ) ? $input['doWorldTesting'] : null;
+					$doWorldPhysics = isset( $input['doWorldPhysics'] ) ? $input['doWorldPhysics'] : null;
+					$doWorldControl = isset( $input['doWorldControl'] ) ? $input['doWorldControl'] : null;
+					$doWorldUnfollowCam = isset( $input['doWorldUnfollowCam'] ) ? $input['doWorldUnfollowCam'] : null;
+
+					// Validate the ID
+					if ( ! $id ) {
+							return [
+									'success' => false,
+									'message' => 'ID is required',
+									'updatedFields' => null,
+							];
 					}
-					if ( ! empty( $input['doAutoLoadData'] ) ) {
-						$exampleOutput += '* Your input for doAutoLoadData was: ' . $input['doAutoLoadData'];
+					// TESTING: First, Validate Booleans?
+					// if ( ! isset( $input['doAutoLoadData'] ) ) {
+					// // if ( ! $doAutoLoadData ) {
+					// 		return [
+					// 				'success' => false,
+					// 				'message' => 'Booleans need to be configured, if set',
+					// 				'updatedFields' => null,
+					// 		];
+					// }
+
+					// Load the Pods item by ID
+					// Use your Pods custom type name (singular)
+					$pod = pods( 'threed_preferences', $id );
+
+					// Check if the Pods item exists
+					if ( ! $pod->exists() ) {
+							return [
+									'success' => false,
+									'message' => 'Pods item not found',
+									'updatedFields' => null,
+							];
 					}
-					if ( ! empty( $input['doAutoRotate'] ) ) {
-						$exampleOutput += '* Your input for doAutoRotate was: ' . $input['doAutoRotate'];
+
+					// Update the custom fields
+					if ( $title ) {
+							$pod->save( 'title', $title );
 					}
+					if ( $content ) {
+							$pod->save( 'content', $content );
+					}
+					if ( $version ) {
+							$pod->save( 'version', $version );
+					}
+					if ( isset( $input['doAutoLoadData'] ) ) {
+							$pod->save( 'do_auto_load_data', $doAutoLoadData ? 1 : 0 );
+					}
+					if ( isset( $input['doAutoRotate'] ) ) {
+							$pod->save( 'do_auto_rotate', $doAutoRotate ? 1 : 0 );
+					}
+					if ( isset( $input['doWorldDebug'] ) ) {
+							$pod->save( 'do_world_debug', $doWorldDebug ? 1 : 0 );
+					}
+					if ( isset( $input['doWorldTesting'] ) ) {
+							$pod->save( 'do_world_testing', $doWorldTesting ? 1 : 0 );
+					}
+					if ( isset( $input['doWorldPhysics'] ) ) {
+							$pod->save( 'do_world_physics', $doWorldPhysics ? 1 : 0 );
+					}
+					if ( isset( $input['doWorldControl'] ) ) {
+							$pod->save( 'do_world_control', $doWorldControl ? 1 : 0 );
+					}
+					if ( isset( $input['doWorldUnfollowCam'] ) ) {
+							$pod->save( 'do_world_unfollow_cam', $doWorldUnfollowCam ? 1 : 0 );
+					}
+					// if ( isset( $input['doAutoLoadData'] ) ) {
+					// 		$pod->save( 'do_auto_load_data', $doAutoLoadData ? 1 : 0 );
+					// }
+					// if ( isset( $input['doAutoRotate'] ) ) {
+					// 		$pod->save( 'do_auto_rotate', $doAutoRotate ? 1 : 0 );
+					// }
+					// if ( isset( $input['doAutoLoadData'] ) ) {
+					// 		$pod->save( 'do_auto_load_data', $doAutoLoadData ? 1 : 0 );
+					// }
+					// if ( isset( $input['doAutoRotate'] ) ) {
+					// 		$pod->save( 'do_auto_rotate', $doAutoRotate ? 1 : 0 );
+					// }
+
+					// Prepare the updated fields for the response
+					$updatedFields = json_encode( [
+							'title' => $title,
+							'content' => $content,
+							'version' => $version,
+							'doAutoLoadData' => $doAutoLoadData,
+							'doAutoRotate' => $doAutoRotate,
+							'doWorldDebug' => $doWorldDebug,
+							'doWorldTesting' => $doWorldTesting,
+							'doWorldPhysics' => $doWorldPhysics,
+							'doWorldControl' => $doWorldControl,
+							'doWorldUnfollowCam' => $doWorldUnfollowCam,
+					] );
+
+					// Return the payload
 					return [
-						'exampleOutput' => $exampleOutput,
+							'success' => true,
+							'message' => 'Pods item updated successfully',
+							'updatedFields' => $updatedFields,
 					];
 				}
 			] 
 		);
-		/*
-		// # Registering the above mutation would allow for the following graphql mutation to be executed:
-		mutation {
-			updateThreeDPreferences(
-				input: { clientMutationId: "example", version: "Test..." }
-			) {
-				clientMutationId
-				exampleOutput
-			}
-		}
-		// # And the following graphql response would be provided:
-		{
-			"data": {
-				"updateThreeDPreferences": {
-					"clientMutationId": "example",
-					"exampleOutput": "Your input was: Test..."
-				}
-			}
-		}
-		*/
-
 	}
 
 	/**
